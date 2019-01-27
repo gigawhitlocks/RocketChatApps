@@ -11,7 +11,7 @@ export class GiphyCommand implements ISlashCommand {
     public providesPreview: boolean;
 
     constructor(private readonly app: GiphyApp) {
-        this.command = 'giphy';
+        this.command = 'gif';
         this.i18nParamsExample = '';
         this.i18nDescription = '';
         this.providesPreview = true;
@@ -49,13 +49,14 @@ export class GiphyCommand implements ISlashCommand {
 
     public async executePreviewItem(item: ISlashCommandPreviewItem, context: SlashCommandContext, read: IRead,
                                     modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
-        const builder = modify.getCreator().startMessage().setSender(context.getSender()).setRoom(context.getRoom());
-
+        const builder = modify.getCreator().startMessage()
+            .setSender(context.getSender())
+            .setRoom(context.getRoom());
         try {
             const gif = await this.app.getGifGetter().getOne(this.app.getLogger(), http, item.id);
             builder.addAttachment({
                 title: {
-                    value: gif.title,
+                    value: " ",
                 },
                 imageUrl: gif.originalUrl,
             });
